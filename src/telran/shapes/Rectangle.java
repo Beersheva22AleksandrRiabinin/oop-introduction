@@ -4,7 +4,7 @@ public class Rectangle {
 	public static final String SYMBOL = "*";
 	private int width;
 	private int height;
-	private static String symbol = SYMBOL;
+	protected static String symbol = SYMBOL;
 	public Rectangle(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -32,7 +32,7 @@ public class Rectangle {
 		String line = getLine(offset);
 		res[0] = line;
 		int lastLine = height - 1;
-		res[height - 1] = line;
+		res[lastLine] = line;
 		for (int i = 1; i < lastLine; i++) {
 			res[i] = getMiddleLine(offset);	//res[i] = this.getMiddleLine(offset);
 		}
