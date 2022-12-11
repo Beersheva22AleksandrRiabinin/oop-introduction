@@ -16,7 +16,7 @@ public class BaseCipher {
 		System.out.println("key: " + key);
 	}
 	
-	static String generateKey (int keyLength) {
+	private String generateKey (int keyLength) {
 		if (keyLength < 2) {
 			keyLength = 2;
 		}
@@ -30,7 +30,7 @@ public class BaseCipher {
 		key = String.join("", res);		
 		return key;
 	}	
-	private static int getUniqueRandomInt(int min,int max) {
+	private int getUniqueRandomInt(int min,int max) {
 		int res = 0;
 		do {
 			res = (int) (min + Math.random() * (max - min +1));
