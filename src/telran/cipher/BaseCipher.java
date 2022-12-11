@@ -37,8 +37,7 @@ public class BaseCipher {
 		} while (rdmMemory[res] != 0);
 		rdmMemory[res] = 1;
 		return res;
-	}
-	
+	}	
 	public String cipher(int number) {
 		char symbol;
 		String cipher = "";
