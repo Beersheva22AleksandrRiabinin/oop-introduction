@@ -2,6 +2,44 @@ package telran.shapes;
 
 public class SquareTriangle extends Square {
 	
+	private boolean isLeftDiagonal;
+
+	public SquareTriangle(int size, boolean isLeftDiagonal) {
+		super(size);
+		this.isLeftDiagonal = isLeftDiagonal;
+	}	
+	public String[] presentation(int offset) {
+		int size = getWidth();
+		String[] res = new String[size];
+		res[0] = getTopLine(offset, size);
+		for (int i = 1; i < size - 1; i++) {
+			res[i] = getMiddleLine(offset, i, size);
+		}		
+		res[size - 1] = getLine(offset);
+		return res;
+	}	
+	private String getMiddleLine(int offset, int i, int size) {	
+		if (isLeftDiagonal) {
+			return getOffset(offset) + symbol + getOffset(i - 1) + symbol + getOffset(size - i - 1);
+		} else {
+			return getOffset(offset + size - 1 - i) + symbol + getOffset(i - 1) + symbol;
+		}		
+	}
+	private String getTopLine(int offset, int size) {
+		if (isLeftDiagonal) {
+			return getOffset(offset) + symbol + getOffset(size - 1);
+		} else {
+			return getOffset(offset + size - 1) + symbol;
+		}
+	}
+
+}
+
+/*
+package telran.shapes;
+
+public class SquareTriangle extends Square {
+	
 	private int size;
 	private boolean isLeftDiagonal;
 
@@ -50,15 +88,14 @@ public class SquareTriangle extends Square {
 		return res;
 	}
 }
+*/
 
 /*
 package telran.shapes;
-
 public class SquareTriangle extends Square {
 	
 	private int size;
 	private boolean isLeftDiagonal;
-
 	public SquareTriangle(int size, boolean isLeftDiagonal) {
 		super(size);
 		this.size = size;
@@ -82,7 +119,6 @@ public class SquareTriangle extends Square {
 		}
 		return res;
 	}
-
 	private String[] correctionForLeft(String[] res, char[][] allLines, int offset, int size) {
 		for (int i = offset + size - 1; i > offset; i--) {		
 			for (int j = 0; j < size - 1; j++) {
@@ -107,6 +143,5 @@ public class SquareTriangle extends Square {
 		}
 		return res;
 	}
-
 }
 */
