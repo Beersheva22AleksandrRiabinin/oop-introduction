@@ -4,10 +4,11 @@ public class SquareTriangle extends Square {
 	
 	private boolean isLeftDiagonal;
 
-	public SquareTriangle(int size, boolean isLeftDiagonal) {
+	protected SquareTriangle(int size, boolean isLeftDiagonal) {
 		super(size);
 		this.isLeftDiagonal = isLeftDiagonal;
-	}	
+	}
+//	@Override
 	public String[] presentation(int offset) {
 		int size = getWidth();
 		String[] res = new String[size];
