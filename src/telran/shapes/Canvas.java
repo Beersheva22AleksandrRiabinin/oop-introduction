@@ -5,42 +5,81 @@ import java.util.Arrays;
 public class Canvas extends Shape {
 	private Shape[] shapes;
 	private int margin = 2;
+	private String direction = "row";
 
 	public Canvas(int width, int height, Shape[] shapes) {
 		super(width, height);
 		this.shapes = shapes;
 	}
-	
+
+	@Override
+	public int getHeight() {
+		return direction.equals("row") ? super.getHeight() : heightsSum() + margin * (shapes.length - 1);
+	}
+
 	@Override
 	public String[] presentation(int offset) {
-		String[] res = new String[getHeight()];
-		Arrays.fill(res, getOffset(offset));
 		for (Shape shape: shapes) {
-			String[] sh = shape.presentation(0);
-			for (int i = 0; i < sh.length; i++ ) {
-				res[i] += sh[i] + getOffset(margin);
+			if (shape instanceof Canvas) {
+				((Canvas)shape).setDirection(direction);
 			}
-		}		
-		return res;
-	}		
-	
-	public String[] column (int offset) {
-		int height = getHeight();
-		int countRows = (height + margin) * shapes.length;
-		String[] res = new String[countRows];
-		int index = 0;
-		for (Shape shape: shapes) {			
-			res = method(res, shape.presentation(offset), offset, index);
-			index += height + margin;
-		}		
-		return res;
+		}
+		return direction.equals("row") ? presentationInRow(offset) : presentationInColumn(offset);
 	}
-	private String[] method (String[] res, String[] shape, int offset, int index) {
-		int height = getHeight();
-		System.arraycopy(shape, 0, res, index, height);
-		for (int i = index + height; i < index + height + margin; i++) {
-			res[i] = getOffset(offset + getWidth());
+
+	private String[] presentationInColumn(int offset) {
+		String res[] = new String[heightsSum() + (shapes.length - 1) * margin];
+		Arrays.fill(res, " ".repeat(getWidth()));
+		int length = mergeLines(0, res, getPresentation(0, offset));
+		for(int i = 1; i < shapes.length; i++) {
+			length = mergeLines(length + margin, res, getPresentation(i, offset));
 		}
 		return res;
+	}
+	
+	private int mergeLines(int length, String[] res, String[] shapePresentation) {
+		System.arraycopy(shapePresentation, 0, res, length, shapePresentation.length);
+		return length + shapePresentation.length;
+	}
+
+	private String[] presentationInRow(int offset) {
+		String[] res = getPresentation(0, offset);
+		for (int i = 1; i < shapes.length; i++) {
+			res = join(res, getPresentation(i, margin));
+		}
+		return res;
+	}
+
+	private String[] join(String[] res, String[] cur) {
+		String[] joinRes = new String[res.length];
+		for (int i = 0; i < joinRes.length; i++) {
+			joinRes[i] = res[i] + cur[i];
+		}
+		return joinRes;
+	}
+
+	private String[] getPresentation(int shapeIndex, int offset) {
+		if (direction.equals("row")) {
+			shapes[shapeIndex].setHeight(getHeight());
+		} else {
+			shapes[shapeIndex].setWidth(getWidth());
+		}
+		return shapes[shapeIndex].presentation(offset);
+	}
+
+	public void setMargin(int margin) {
+		this.margin = margin;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	private int heightsSum() {
+		int sum = 0;
+		for (Shape shape: shapes) {
+			sum += shape.getHeight();
+		}
+		return sum;
 	}
 }

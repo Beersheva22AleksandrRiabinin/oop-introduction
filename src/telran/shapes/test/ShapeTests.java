@@ -14,6 +14,10 @@ import telran.shapes.Canvas;
 
 
 class ShapeTests {
+	Canvas canvas = new Canvas(10, 20,
+			new Shape[] { new Rectangle(10, 3), new Square(10), new SquareLeftTriangle(10) });
+	Shape[] shapes = { new Rectangle(10, 3), new Square(10), new SquareLeftTriangle(10), new SquareRightTriangle(10),
+			canvas, new Square(10) };
 
 	@Test
 	@Disabled
@@ -53,15 +57,21 @@ class ShapeTests {
 		displayStrings(triangle.presentation(10));
 	}
 	@Test
-	void Canvas() {
-		Rectangle rectangle = new Rectangle(5,5);
-		Square square = new Square(5);
-		SquareLeftTriangle leftTriangle = new SquareLeftTriangle(5);
-		SquareRightTriangle rightTriangle = new SquareRightTriangle(5);
-		Shape[] shapes = new Shape[] {rectangle, square, leftTriangle, rightTriangle};
-		Canvas canvas = new Canvas(5, 5, shapes);
-		displayStrings(canvas.presentation(10));
-		displayStrings(canvas.column(10));
+	@Disabled
+	void CanvasInRowTest() {		
+		Canvas canvas = new Canvas(10, 4, shapes);
+		canvas.setMargin(3);
+		displayStrings(canvas.presentation(2));
+	}
+	@Test
+//	@Disabled
+	void CanvasInColumnTest() {		
+		Canvas canvas = new Canvas(10, 4, shapes);
+//		canvas.setDirection("column");
+		this.canvas.setDirection("column");
+		canvas.setMargin(1);
+		displayStrings(canvas.presentation(2));
+		
 	}
 
 }
