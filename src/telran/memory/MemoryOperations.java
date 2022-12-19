@@ -6,17 +6,19 @@ public class MemoryOperations {
 		int min = 0;
 		int middle = max;
 		int res = 0;
-		byte ar[] = null;
+//		byte ar[] = null;
 		while (min <= max) {			
 			try {
-				ar = new byte[middle];
-				ar = null;
+//				ar = new byte[middle];
+//				ar = null;
+				byte ar[] = new byte[middle];
 				res = middle;			
 				min = middle + 1;
 			} catch (Throwable e) {
 				max = middle - 1;
 			}
-			middle = (min + max) / 2;
+//			middle = (min + max) / 2;
+			middle = min + (max - min) / 2;
 		}
 		return res;
 	}
