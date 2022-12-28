@@ -23,7 +23,7 @@ class MemoryOperationsTest {
 		}
 		assertTrue(flException);
 	}
-//	-Xms50M -Xmx500M
+//	-Xms50M -Xmx500M 
 	@Test	
 	void standartMemoryMethods() {
 		Runtime runtime = Runtime.getRuntime();

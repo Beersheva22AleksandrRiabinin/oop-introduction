@@ -17,7 +17,7 @@ public class MemoryOperations {
 			} catch (Throwable e) {
 				max = middle - 1;
 			}
-//			middle = (min + max) / 2;
+//			middle = (min + max) / 2; 
 			middle = min + (max - min) / 2;
 		}
 		return res;
