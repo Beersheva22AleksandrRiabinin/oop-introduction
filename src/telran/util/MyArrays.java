@@ -45,60 +45,55 @@ public class MyArrays {
 	}
 
 	public static <T> T[] filter(T[] array, Predicate<T> predicate) {
-		int countPredicate = getCountPredicate(array, predicate);
-		T[] res = Arrays.copyOf(array, countPredicate);
+		T[] res = Arrays.copyOf(array, array.length);
 		int index = 0;
-		for (T element: array) {
-			if (predicate.test(element)) {
+		for(T element: array) {
+			if(predicate.test(element)) {
 				res[index++] = element;
 			}
 		}
-		return res;
+		
+		return Arrays.copyOf(res, index);
 	}
 
-	private static <T> int getCountPredicate(T[] array, Predicate<T> predicate) {
-		int res = 0;
-		for (T element: array) {	
-			if (predicate.test(element)) {			
-				res++;
-			}
-		}
-		return res;
-	}
+
 	public static <T> T[] removeIf(T[] array, Predicate<T> predicate) {
 		
 		return filter(array, predicate.negate());
 	}
 
-	public static <T> T[] removeRepeated(T[] array) {	
-		T[] res = Arrays.copyOf(array, array.length);
-		int index = 0;
-		while (index < res.length - 1) {
-			T[] helper = Arrays.copyOfRange(res, index + 1, res.length);
-			if (contains(helper, res[index])) {
-				T[] cleanPart = deleteIdentical(helper, res[index]);
-				res = Arrays.copyOf(res, index + 1 + cleanPart.length);
-				System.arraycopy(cleanPart, 0, res, index + 1, cleanPart.length);
+	public static <T> T[] removeRepeated(T[] array) {
+		final Object helper[] = new Object[array.length];
+		final int index[] = {0};
+		return removeIf(array, element -> {
+			boolean res = true;
+			if (!contains(helper, element)) {
+				helper[index[0]++] = element;
+				res = false;
 			}
-			index++;
-		}		
-		return res;
+			return res;
+		});
 	}
-	public static <T> T[] deleteIdentical(T[] array, T pattern) {
-		return removeIf(array, e -> e.equals(pattern));
-	}
-
 	public static <T> boolean contains(T[] array, T pattern) {
-		boolean res = false;
 		int index = 0;
-		while (index < array.length && !res) {
-			if (array[index] == null) {
-				res = true;
-			} else if (array[index].equals(pattern)) {
-				res = true;
-			}
+		while(index < array.length && !isEqual(array[index], pattern)) {
 			index++;
-		}			
+		}
+		
+		return index < array.length;
+	}
+	static private boolean isEqual(Object element, Object pattern) {
+		return element == null ? element == pattern : element.equals(pattern);
+	}
+	public static <T> String join(T[] array, String delimiter) {
+		String res = "";
+		if (array.length > 0) {
+			StringBuilder builder = new StringBuilder(array[0].toString());
+			for (int i = 1; i < array.length; i++) {
+				builder.append(delimiter).append(array[i]);
+			}
+			res = builder.toString();
+		}
 		return res;
 	}
 
