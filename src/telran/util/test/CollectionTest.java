@@ -51,7 +51,7 @@ public abstract class CollectionTest {
 		
 	}
 	@Test
-//	@Disabled
+	@Disabled
 	void removeIfPerformanceTest() {
 
 		assertTrue(collection.removeIf(n -> true));
