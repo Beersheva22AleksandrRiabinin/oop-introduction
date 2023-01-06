@@ -9,6 +9,8 @@ public interface List<T> extends Collection<T> {
 	T get(int index);
 	void set(int index, T element);
 	
+	void setNext(int index1, int index2);
+	
 	default void checkIndex(int index, boolean sizeIncluded) {
 		int sizeDelta = sizeIncluded ? 0 : 1;
 		if (index < 0 || index > size() - sizeDelta) {
@@ -16,10 +18,22 @@ public interface List<T> extends Collection<T> {
 		}
 	}
 	
-	@Override
 	default boolean contains(T pattern) {
 
 		return indexOf(pattern) > -1;
 	}
+	
+	default boolean remove(T pattern) {
+		boolean res = false;
+		int index = indexOf(pattern);
+		if (index > -1) {
+			res = true;
+			remove(index);
+		}
+
+		return res;
+	}
+	
+	
 
 }

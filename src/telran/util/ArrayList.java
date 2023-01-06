@@ -5,13 +5,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
-public class ArrayList<T> implements List<T> {
+public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 	static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
-	private int size;
+
 
 	private class ArrayListIterator implements Iterator<T> {
 		int index = 0;
+		boolean flNext = false;
 
 		@Override
 		public boolean hasNext() {
@@ -24,8 +25,20 @@ public class ArrayList<T> implements List<T> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
+			flNext = true;
 			return array[index++];
 		}
+		
+		@Override
+		public void remove() {
+			if (!flNext) {
+				throw new IllegalStateException();
+			}
+			ArrayList.this.remove(index - 1);
+			index--;
+			flNext = false;
+		}
+
 
 	}
 
@@ -50,18 +63,7 @@ public class ArrayList<T> implements List<T> {
 	private void reallocate() {
 		array = Arrays.copyOf(array, array.length * 2);
 	}
-
-	@Override
-	public boolean remove(T pattern) {
-		boolean res = false;
-		int index = indexOf(pattern);
-		if (index > -1) {
-			res = true;
-			remove(index);
-		}
-		return res;
-	}
-
+/*
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		int oldSize = size;			
@@ -80,30 +82,17 @@ public class ArrayList<T> implements List<T> {
 		
 		return oldSize > size;
 	}
+*/	
 
-	@Override
-	public boolean isEmpty() {
-
-		return size == 0;
-	}
-
-	@Override
-	public int size() {
-
-		return size;
-	}
-
-	
-
-	@Override
-	public T[] toArray(T[] ar) {
-		if (ar.length < size) {
-			ar = Arrays.copyOf(array, size);
-		}
-		System.arraycopy(array, 0, ar, 0, size);
-		Arrays.fill(ar, size, ar.length, null);
-		return ar;
-	}
+//	@Override
+//	public T[] toArray(T[] ar) {
+//		if (ar.length < size) {
+//			ar = Arrays.copyOf(array, size);
+//		}
+//		System.arraycopy(array, 0, ar, 0, size);
+//		Arrays.fill(ar, size, ar.length, null);
+//		return ar;
+//	}
 
 	@Override
 	public void add(int index, T element) {
@@ -136,10 +125,7 @@ public class ArrayList<T> implements List<T> {
 		return index < size ? index : -1;
 	}
 
-	private boolean isEqual(T element, T pattern) {
-
-		return element == null ? element == pattern : element.equals(pattern);
-	}
+	
 
 	@Override
 	public int lastIndexOf(T pattern) {
@@ -169,6 +155,18 @@ public class ArrayList<T> implements List<T> {
 	public Iterator<T> iterator() {
 		
 		return new ArrayListIterator();
+	}
+
+	@Override
+	public boolean hasLoop() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setNext(int index1, int index2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
