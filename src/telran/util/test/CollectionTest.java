@@ -52,6 +52,7 @@ public abstract class CollectionTest {
 		
 		
 	}
+	
 	@Test
 	@Disabled
 	void removeIfPerformanceTest() {
@@ -88,7 +89,7 @@ public abstract class CollectionTest {
 	void testToArray() {
 		
 		Arrays.fill(ar, 10);
-		assertTrue(ar == collection.toArray(ar));
+		assertTrue(ar == collection.toArray(ar));		
 		for(int i = 0; i < numbers.length; i++) {
 			assertEquals(ar[i], numbers[i]);
 		}

@@ -24,8 +24,8 @@ public abstract class ListTest extends CollectionTest {
 	  assertTrue(list.add(numbers[0]));
 	  assertEquals(numbers.length + 1, list.size());
   }
-  @Test
   
+  @Test
 	void testAddInt() {
 		Integer [] expected1 = {10, 100, -5, 100, 134, 280, 120, 15};
 		Integer [] expected2 = {8, 10, 100, -5, 100, 134, 280, 120, 15};

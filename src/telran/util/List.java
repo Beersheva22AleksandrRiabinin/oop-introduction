@@ -7,9 +7,7 @@ public interface List<T> extends Collection<T> {
 	int indexOf(T pattern);
 	int lastIndexOf(T pattern);
 	T get(int index);
-	void set(int index, T element);
-	
-	void setNext(int index1, int index2);
+	void set(int index, T element);	
 	
 	default void checkIndex(int index, boolean sizeIncluded) {
 		int sizeDelta = sizeIncluded ? 0 : 1;

@@ -24,7 +24,6 @@ public interface Collection<T> extends Iterable<T>{
 	int size();
 	boolean contains(T pattern);
 	
-	boolean hasLoop();
 	
 	/**
 	 * 
@@ -47,7 +46,11 @@ public interface Collection<T> extends Iterable<T>{
 		int i = 0;
 		while (it.hasNext()) {
 			ar[i++] = it.next();
-		}		
+		}
+//		int index = 0;
+//		for (T obj: this) {
+//			ar[index++] = obj;
+//		}
 		Arrays.fill(ar, size, ar.length, null);
 		return ar;
 	}

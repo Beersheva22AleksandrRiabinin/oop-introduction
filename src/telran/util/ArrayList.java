@@ -36,6 +36,7 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 			}
 			ArrayList.this.remove(index - 1);
 			index--;
+//			ArrayList.this.remove(--index);
 			flNext = false;
 		}
 
@@ -63,6 +64,7 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 	private void reallocate() {
 		array = Arrays.copyOf(array, array.length * 2);
 	}
+	
 /*
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
@@ -82,18 +84,19 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 		
 		return oldSize > size;
 	}
-*/	
+	
 
-//	@Override
-//	public T[] toArray(T[] ar) {
-//		if (ar.length < size) {
-//			ar = Arrays.copyOf(array, size);
-//		}
-//		System.arraycopy(array, 0, ar, 0, size);
-//		Arrays.fill(ar, size, ar.length, null);
-//		return ar;
-//	}
-
+	@Override
+	public T[] toArray(T[] ar) {
+		if (ar.length < size) {
+			ar = Arrays.copyOf(array, size);
+		}
+		System.arraycopy(array, 0, ar, 0, size);
+		Arrays.fill(ar, size, ar.length, null);
+		return ar;
+	}	
+*/
+	
 	@Override
 	public void add(int index, T element) {
 		checkIndex(index, true);
@@ -157,16 +160,5 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 		return new ArrayListIterator();
 	}
 
-	@Override
-	public boolean hasLoop() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setNext(int index1, int index2) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

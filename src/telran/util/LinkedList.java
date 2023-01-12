@@ -65,35 +65,8 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 		}
 		size++;
 		return true;
-	}	
-/*
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		int oldSize = size;
-		Node<T> current = head;
-		while (current != null) {
-			if (predicate.test(current.obj)) {
-				removeNode(current);
-			}
-			current = current.next;
-		}
-		return oldSize > size;
 	}
-*/
-//	@Override
-//	public T[] toArray(T[] ar) {
-//		if (ar.length < size) {
-//			ar = Arrays.copyOf(ar, size);
-//		}
-//		Node<T> current = head;
-//		for (int i = 0; i < size; i++) {
-//			ar[i] = current.obj;
-//			current = current.next;
-//		}
-//		Arrays.fill(ar, size, ar.length, null);
-//		return ar;
-//	}
-
+	
 	@Override
 	public Iterator<T> iterator() {
 
@@ -123,9 +96,7 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 		size++;
 	}
 	
-	//Comments only for LinkedList task of loop existence
 	public void setNext(int index1, int index2) {
-		//sets next of element at index1 to element at index2
 		if (index1 < index2) {
 			throw new IllegalArgumentException();
 		}
@@ -135,14 +106,10 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 	}
 	
 	public boolean hasLoop() {
-		// method returns true if there is loop by next reference referring to a previous element
-		// use neither "size" nor "size()"
-		// no use prev filed in a Node
-		// O[N]  with no using collections
 		boolean res = false;
 		Node<T> slow = head;
 		Node<T> fast = head;
-		while (fast.next != null && !res) {
+		while (fast != null && fast.next != null && !res) {
 			slow = slow.next;
 			fast = fast.next.next;
 			if (fast == slow) {
